@@ -1,0 +1,87 @@
+[gd_scene load_steps=10 format=3 uid="uid://b0a1ki0ublauk"]
+
+[ext_resource type="Texture2D" uid="uid://cilsfe3ohytfq" path="res://assets/sprites/slime_green.png" id="1_3huoa"]
+[ext_resource type="Script" path="res://scripts/slime.gd" id="1_ly61k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pg61c"]
+atlas = ExtResource("1_3huoa")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uassd"]
+atlas = ExtResource("1_3huoa")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nskou"]
+atlas = ExtResource("1_3huoa")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8qsj"]
+atlas = ExtResource("1_3huoa")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4lyxs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pg61c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uassd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nskou")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8qsj")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b350o"]
+size = Vector2(8, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ruoii"]
+size = Vector2(2, 2)
+
+[node name="Slime" type="CharacterBody2D" groups=["enemy"]]
+position = Vector2(0, -6)
+collision_layer = 0
+collision_mask = 4
+floor_snap_length = 0.0
+script = ExtResource("1_ly61k")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4lyxs")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="RaycastRight" type="RayCast2D" parent="."]
+position = Vector2(0, 6)
+target_position = Vector2(5, 0)
+collision_mask = 7
+
+[node name="RaycastLeft" type="RayCast2D" parent="."]
+position = Vector2(0, 6)
+scale = Vector2(1, 1.01427)
+target_position = Vector2(-5, 0)
+collision_mask = 7
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Hitbox" type="Area2D" parent="." groups=["enemy"]]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" groups=["enemy"]]
+position = Vector2(0, 6.5)
+scale = Vector2(0.995825, 1)
+shape = SubResource("RectangleShape2D_b350o")
+
+[node name="Body" type="CollisionShape2D" parent="."]
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_ruoii")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="area_exited" from="Hitbox" to="." method="_on_hitbox_area_exited"]

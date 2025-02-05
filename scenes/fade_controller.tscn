@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bner8k30dhner"]
+
+[ext_resource type="Script" path="res://scenes/overworld/fade_controller.gd" id="1_yupyo"]
+
+[node name="Fade_Controller" type="Node2D"]
+script = ExtResource("1_yupyo")

@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://hgpbvjgb0lg8"]
+
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_ik7yt"]
+[ext_resource type="FontFile" uid="uid://dlbro7q10tg8f" path="res://assets/fonts/PixelOperator8.ttf" id="2_qyx63"]
+
+[node name="GameManager" type="Node"]
+script = ExtResource("1_ik7yt")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HealthLabel" type="Label" parent="CanvasLayer"]
+offset_top = 2.0
+offset_right = 190.0
+offset_bottom = 25.0
+theme_override_fonts/font = ExtResource("2_qyx63")
+text = "Health: 100/100"
+
+[node name="GameoverLabel" type="Label" parent="CanvasLayer"]
+visible = false
+offset_left = 225.0
+offset_top = 262.0
+offset_right = 1033.0
+offset_bottom = 326.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_qyx63")
+theme_override_font_sizes/font_size = 64
+text = "BURN IN HELL LOL"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="IFrames" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="IFrames" to="." method="_on_i_frames_timeout"]

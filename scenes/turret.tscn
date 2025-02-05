@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://csk8kkibpfs3l"]
+
+[ext_resource type="Texture2D" uid="uid://j6fsri26d2yv" path="res://assets/sprites/slime_purple.png" id="1_0mcsx"]
+[ext_resource type="Script" path="res://scripts/turret.gd" id="1_4pxls"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rorqp"]
+atlas = ExtResource("1_0mcsx")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iei8f"]
+atlas = ExtResource("1_0mcsx")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aorrj"]
+atlas = ExtResource("1_0mcsx")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_38og6"]
+atlas = ExtResource("1_0mcsx")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tcnns"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rorqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iei8f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aorrj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_38og6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bcurn"]
+radius = 246.733
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qv6vt"]
+size = Vector2(10, 12)
+
+[node name="Turret" type="Node2D" groups=["must_be_deflected"]]
+script = ExtResource("1_4pxls")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tcnns")
+autoplay = "default"
+frame = 1
+frame_progress = 0.172166
+
+[node name="DetectionRange" type="Area2D" parent="."]
+
+[node name="DetectionShape" type="CollisionShape2D" parent="DetectionRange"]
+shape = SubResource("CircleShape2D_bcurn")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(0, 5)
+target_position = Vector2(186, 0)
+
+[node name="hitbox" type="Area2D" parent="." groups=["must_be_deflected"]]
+
+[node name="hitboxShape" type="CollisionShape2D" parent="hitbox" groups=["must_be_deflected"]]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_qv6vt")
